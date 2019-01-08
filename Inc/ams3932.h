@@ -68,9 +68,9 @@
 
 
 
-void Ams3932_WriteSingleRegister(uint8_t regAddr, uint8_t wData);
-uint8_t Ams3932_ReadSingleRegister(uint8_t regAddr);
-void Ams3932_Initial(void);
+void ams3932WriteSingleRegister(uint8_t regAddr, uint8_t wData);
+uint8_t ams3932ReadSingleRegister(uint8_t regAddr);
+void ams3932Initial(void);
 
 
 #ifdef __cplusplus

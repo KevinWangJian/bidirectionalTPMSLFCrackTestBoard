@@ -12,7 +12,7 @@
   * @param  wtData, the transmitted data.
   * @retval received data by spi.
   */
-static void HAL_Ams3932CommPorts_Init(void)
+static void HAL_Ams3932CommPortsInit(void)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -41,7 +41,7 @@ static void HAL_Ams3932CommPorts_Init(void)
   * @param  wtData, the transmitted data.
   * @retval received data by spi.
   */
-static void Ams3932_DelayUs(uint16_t delayCnt)
+static void ams3932DelayUs(uint16_t delayCnt)
 {
 	uint16_t k;
 
@@ -59,7 +59,7 @@ static void Ams3932_DelayUs(uint16_t delayCnt)
   * @param  wtData, the transmitted data.
   * @retval received data by spi.
   */
-static void Ams3932_WriteDirectCommand(uint8_t cmd)
+static void ams3932WriteDirectCommand(uint8_t cmd)
 {
 	uint8_t i;
 
@@ -87,7 +87,7 @@ static void Ams3932_WriteDirectCommand(uint8_t cmd)
 
 	LF_MOSI_Low();
 
-	Ams3932_DelayUs(20);
+	ams3932DelayUs(20);
 
 	LF_CS_Low();
 }
@@ -97,7 +97,7 @@ static void Ams3932_WriteDirectCommand(uint8_t cmd)
   * @param  wtData, the transmitted data.
   * @retval received data by spi.
   */
-void Ams3932_WriteSingleRegister(uint8_t regAddr, uint8_t wData)
+void ams3932WriteSingleRegister(uint8_t regAddr, uint8_t wData)
 {
 	uint8_t i;
 	uint16_t value;
@@ -126,7 +126,7 @@ void Ams3932_WriteSingleRegister(uint8_t regAddr, uint8_t wData)
 
 	LF_MOSI_Low();
 
-	Ams3932_DelayUs(20);
+	ams3932DelayUs(20);
 
 	LF_CS_Low();
 }
@@ -136,7 +136,7 @@ void Ams3932_WriteSingleRegister(uint8_t regAddr, uint8_t wData)
   * @param  wtData, the transmitted data.
   * @retval received data by spi.
   */
-uint8_t Ams3932_ReadSingleRegister(uint8_t regAddr)
+uint8_t ams3932ReadSingleRegister(uint8_t regAddr)
 {
 	uint8_t i, value;
 
@@ -181,7 +181,7 @@ uint8_t Ams3932_ReadSingleRegister(uint8_t regAddr)
 
 	LF_MOSI_Low();
 
-	Ams3932_DelayUs(20);
+	ams3932DelayUs(20);
 
 	LF_CS_Low();
 
@@ -193,32 +193,32 @@ uint8_t Ams3932_ReadSingleRegister(uint8_t regAddr)
   * @param  wtData, the transmitted data.
   * @retval received data by spi.
   */
-void Ams3932_Initial(void)
+void ams3932Initial(void)
 {
-	HAL_Ams3932CommPorts_Init();							/* Initialize AS3932 hardware communication ports. */
+	HAL_Ams3932CommPortsInit();							/* Initialize AS3932 hardware communication ports. */
 	
-	Ams3932_WriteDirectCommand(AMS3932_PRESET_DEFAULT);
-	Ams3932_WriteDirectCommand(AMS3932_CLEAR_WAKE);
+	ams3932WriteDirectCommand(AMS3932_PRESET_DEFAULT);
+	ams3932WriteDirectCommand(AMS3932_CLEAR_WAKE);
 
-	Ams3932_WriteSingleRegister(AMS3932_R0, 0x2A);			/* 通道使能ON/OFF模式,禁止扫描模式,且通道1和2打开,通道3关闭.  */
+	ams3932WriteSingleRegister(AMS3932_R0, 0x2A);			/* 通道使能ON/OFF模式,禁止扫描模式,且通道1和2打开,通道3关闭.  */
 	
-	Ams3932_WriteSingleRegister(AMS3932_R1, 0x2A);			/* 使能曼彻斯特编码,不使能天线阻尼器,双向使能AGC,AGC只在第一个载波触发,不使能数据限幅器,晶体振荡器不使能. */
+	ams3932WriteSingleRegister(AMS3932_R1, 0x2A);			/* 使能曼彻斯特编码,不使能天线阻尼器,双向使能AGC,AGC只在第一个载波触发,不使能数据限幅器,晶体振荡器不使能. */
 	
-	Ams3932_WriteSingleRegister(AMS3932_R2, 0x21);
+	ams3932WriteSingleRegister(AMS3932_R2, 0x21);
 
-	Ams3932_WriteSingleRegister(AMS3932_R3, 0xF8);			/* 比较器设置成20mA,数据限幅器在上升沿作用,最小前导码（Preamble）长度3.5mS. */
+	ams3932WriteSingleRegister(AMS3932_R3, 0xF8);			/* 比较器设置成20mA,数据限幅器在上升沿作用,最小前导码（Preamble）长度3.5mS. */
 
-	Ams3932_WriteSingleRegister(AMS3932_R4, 0x20);			/* ON/OFF模式下OFF时长1mS,天线阻尼电阻10K,无增益衰减. */
+	ams3932WriteSingleRegister(AMS3932_R4, 0x20);			/* ON/OFF模式下OFF时长1mS,天线阻尼电阻10K,无增益衰减. */
 
-	Ams3932_WriteSingleRegister(AMS3932_R5, 0x69);			/* 第二个唤醒前导码0X69. */
-	Ams3932_WriteSingleRegister(AMS3932_R6, 0x96);			/* 第一个唤醒前导码0X96. */
+	ams3932WriteSingleRegister(AMS3932_R5, 0x69);			/* 第二个唤醒前导码0X69. */
+	ams3932WriteSingleRegister(AMS3932_R6, 0x96);			/* 第一个唤醒前导码0X96. */
 
-	Ams3932_WriteSingleRegister(AMS3932_R7, 0x2B);			/* R7寄存器设置：超时设置50mS,波特率12. */
+	ams3932WriteSingleRegister(AMS3932_R7, 0x2B);			/* R7寄存器设置：超时设置50mS,波特率12. */
 
-	Ams3932_WriteSingleRegister(AMS3932_R8, 0x00);			/* R8寄存器设置：唤醒频率95-150kHz. */
+	ams3932WriteSingleRegister(AMS3932_R8, 0x00);			/* R8寄存器设置：唤醒频率95-150kHz. */
 
-	Ams3932_WriteDirectCommand(AMS3932_CLEAR_WAKE);
-	Ams3932_WriteDirectCommand(AMS3932_CLEAR_FALSE);
+	ams3932WriteDirectCommand(AMS3932_CLEAR_WAKE);
+	ams3932WriteDirectCommand(AMS3932_CLEAR_FALSE);
 }
 
 

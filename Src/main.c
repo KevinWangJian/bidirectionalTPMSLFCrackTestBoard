@@ -104,9 +104,9 @@ int main(void)
   MX_CAN_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  CanAttributeInit();
+  HAL_CANAttributeInit();
   HAL_CANTransmitScanTimerStart();
-  Ams3932_Initial();
+  ams3932Initial();
 
   /* USER CODE END 2 */
 
@@ -226,7 +226,7 @@ void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef* phcan)
 			}
 			else 
 			{
-				HAL_CANInterrupts_Config(&hcan, 
+				HAL_ConfigCANInterrupts(&hcan,
 										(CAN_IT_EWG | \
 									 	 CAN_IT_EPV | \
 									 	 CAN_IT_BOF | \

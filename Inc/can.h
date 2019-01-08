@@ -88,10 +88,10 @@ void MX_CAN_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
-void HAL_CANInterrupts_Config(CAN_HandleTypeDef* pCanHandle, uint32_t itSrc, FunctionalState status);
+void HAL_ConfigCANInterrupts(CAN_HandleTypeDef* pCanHandle, uint32_t itSrc, FunctionalState status);
 int HAL_CANSendMessage(CAN_HandleTypeDef* pCanHandle, CAN_MessageTypeDef* pTxMsg);
 int HAL_CANReceiveMessage(CAN_HandleTypeDef* pCanHandle, CAN_MessageTypeDef* pRxMsg);
-void CanAttributeInit(void);
+void HAL_CANAttributeInit(void);
 
 
 

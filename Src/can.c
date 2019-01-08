@@ -191,7 +191,7 @@ static void HAL_CANFilter_Init(CAN_HandleTypeDef* pCanHandle)
   * @param  pCanHandle, CAN module handle pointer.
   * @retval None.
   */
-void HAL_CANInterrupts_Config(CAN_HandleTypeDef* pCanHandle, uint32_t itSrc, FunctionalState status)
+void HAL_ConfigCANInterrupts(CAN_HandleTypeDef* pCanHandle, uint32_t itSrc, FunctionalState status)
 {
 	if (status == ENABLE)
 	{
@@ -286,7 +286,7 @@ int HAL_CANSendMessage(CAN_HandleTypeDef* pCanHandle, CAN_MessageTypeDef* pTxMsg
 #else
 	if (HAL_CAN_Transmit_IT(pCanHandle) == HAL_OK)
 	{
-		HAL_CANInterrupts_Config(pCanHandle, 
+		HAL_ConfigCANInterrupts(pCanHandle,
 								(CAN_IT_EWG | \
 								 CAN_IT_EPV | \
 								 CAN_IT_BOF | \
@@ -426,22 +426,23 @@ int HAL_CANReceiveMessage(CAN_HandleTypeDef* pCanHandle, CAN_MessageTypeDef* pRx
   * @param  None.
   * @retval None.
   */
-void CanAttributeInit(void)
+void HAL_CANAttributeInit(void)
 {
 	HAL_CANMailBox_Init(&hcan);
+
 	HAL_CANFilter_Init(&hcan);
 	
 #if (configCAN_FIFO0_RECEIVE_INTERRUPT_ENABLE == 1)
-	HAL_CANInterrupts_Config(&hcan, CAN_IT_FMP0, ENABLE);
+	HAL_ConfigCANInterrupts(&hcan, CAN_IT_FMP0, ENABLE);
 #endif
 
 #if (configCAN_FIFO1_RECEIVE_INTERRUPT_ENABLE == 1)
-	HAL_CANInterrupts_Config(&hcan, CAN_IT_FMP1, ENABLE);
+	HAL_ConfigCANInterrupts(&hcan, CAN_IT_FMP1, ENABLE);
 #endif
 
 #if 0
 #if (configCAN_TRANSMIT_INTERRUPT_ENABLE == 1)
-	HAL_CANInterrupts_Config(&hcan, CAN_IT_TME, ENABLE);
+	HAL_ConfigCANInterrupts(&hcan, CAN_IT_TME, ENABLE);
 #endif
 #endif
 }
