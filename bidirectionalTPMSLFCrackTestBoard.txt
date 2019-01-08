@@ -16,6 +16,7 @@ SPI2	Full-Duplex Master	SPI2_SCK	PB13
 SYS	Serial Wire	SYS_JTCK-SWCLK	PA14
 SYS	Serial Wire	SYS_JTMS-SWDIO	PA13
 SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+TIM1	Internal Clock	TIM1_VS_ClockSourceINT	VP_TIM1_VS_ClockSourceINT
 USART2	Asynchronous	USART2_RX	PA3
 USART2	Asynchronous	USART2_TX	PA2
 
